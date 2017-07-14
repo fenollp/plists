@@ -11,4 +11,4 @@ install:
   - chmod +x ./rebar3
 
 script: ./rebar3 do update,upgrade,compile
-after_success: ./rebar3 eunit
+# after_success: ./rebar3 eunit
