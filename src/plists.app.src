@@ -1,0 +1,15 @@
+{application, plists,
+ [{description, "An Erlang module for doing list operations in parallel"}
+ ,{vsn, "1.0.0"}
+ ,{registered, []}
+ ,{modules, [plists]}
+ ,{applications, [kernel
+                 ,stdlib
+                 ]}
+ ,{env, []}
+
+ ,{licenses, ["MIT"]}
+ ,{links, [{"Github", "https://github.com/tsloughter/rebar3_hex"}
+          ,{"originalAuthor", "https://code.google.com/archive/p/plists"}
+          ]}
+ ]}.
