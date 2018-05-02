@@ -155,9 +155,10 @@
 % LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 % THE SOFTWARE.
-
-
 -module(plists).
+
+-include_lib("otp_vsn/include/otp_vsn.hrl").
+
 -export([all/2, all/3, any/2, any/3, filter/2, filter/3,
 fold/3, fold/4, fold/5, foreach/2, foreach/3, map/2, map/3,
 partition/2, partition/3, sort/1, sort/2, sort/3,
@@ -731,10 +732,18 @@ cluster_runmany(Fun, Fuse, [Task|TaskList], [N|Nodes], Running, Results) ->
 			   ok;
 			 exit:Reason ->
 			   Parent ! {self(), error, Reason};
-			 error:R ->
+           ?OTP_VSN_IF_HAS_ST_MATCHING(
+			 error:R:ST ->
+			   Parent ! {self(), error, {R, ST}};
+			,error:R ->
 			   Parent ! {self(), error, {R, erlang:get_stacktrace()}};
-			 throw:R ->
+		   )
+		   ?OTP_VSN_IF_HAS_ST_MATCHING(
+			 throw:R:ST ->
+			   Parent ! {self(), error, {{nocatch, R}, ST}}
+			,throw:R ->
 			   Parent ! {self(), error, {{nocatch, R}, erlang:get_stacktrace()}}
+		   )
 			 end
 	   end,
     Pid = spawn(N, Fun3),
