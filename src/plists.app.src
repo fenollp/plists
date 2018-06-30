@@ -1,6 +1,6 @@
 {application,plists,
              [{description,"An Erlang module for doing list operations in parallel"},
-              {vsn,"1.1.0"},
+              {vsn,"1.1.1"},
               {registered,[]},
               {modules,[plists]},
               {applications,[kernel,stdlib]},
